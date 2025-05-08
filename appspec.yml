@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/cicd-demo-app
+hooks:
+  BeforeInstall:
+    - location: scripts/stop_server.sh
+      timeout: 60
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/start_server.sh
+      timeout: 60
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/validate_service.sh
+      timeout: 60
+      runas: ec2-user
